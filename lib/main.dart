@@ -98,3 +98,89 @@ const items = <GameItem>[
   ),
 ];
 
+class NuclearAkinatorApp extends StatelessWidget {
+  const NuclearAkinatorApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Nuclear Akinator',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        useMaterial3: true,
+        scaffoldBackgroundColor: cream,
+        colorScheme: ColorScheme.fromSeed(seedColor: pink, primary: navy, surface: cream),
+        fontFamily: 'Roboto',
+        appBarTheme: const AppBarTheme(
+          backgroundColor: cream, foregroundColor: navy, elevation: 0,
+          centerTitle: false, titleTextStyle: TextStyle(color: navy, fontSize: 18, fontWeight: FontWeight.w800),
+        ),
+      ),
+      home: const HomeScreen(),
+    );
+  }
+}
+
+class GameSession extends ChangeNotifier {
+  String category = 'Todos';
+  final Map<String, bool?> answers = {};
+  int questionIndex = 0;
+  GameItem? guessedItem;
+  GameItem? confirmedItem;
+  bool guessConfirmed = false;
+
+  final List<String> questions = const [
+    'É um alimento?',
+    'É uma fruta?',
+    'É amarelo?',
+    'É usado no dia a dia?',
+    'É usado na medicina?',
+    'Funciona com bateria?',
+    'É eletrônico?',
+    'É encontrado em feiras?',
+  ];
+
+  List<GameItem> get candidates {
+    return items.where((item) {
+      if (category != 'Todos' && item.category != category) return false;
+      for (final entry in answers.entries) {
+        if (entry.value == null) continue;
+        final trait = item.traits[entry.key];
+        if (trait != null && trait != entry.value) return false;
+      }
+      return true;
+    }).toList();
+  }
+
+  void reset(String selectedCategory) {
+    category = selectedCategory;
+    answers.clear();
+    questionIndex = 0;
+    guessedItem = null;
+    confirmedItem = null;
+    guessConfirmed = false;
+  }
+
+  void answer(bool? value) {
+    final q = questions[questionIndex];
+    answers[q] = value;
+    questionIndex++;
+  }
+
+  GameItem chooseGuess() {
+    final pool = candidates.isNotEmpty ? candidates : items.where((e) => category == 'Todos' || e.category == category).toList();
+    guessedItem = pool.first;
+    return guessedItem!;
+  }
+
+  void confirmGuess() {
+    confirmedItem = guessedItem;
+    guessConfirmed = true;
+  }
+
+  void correctGuess(GameItem item) {
+    confirmedItem = item;
+    guessConfirmed = false;
+  }
+}
+
