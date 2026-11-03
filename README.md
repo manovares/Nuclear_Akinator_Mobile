@@ -60,9 +60,6 @@ O aplicativo possui **7 telas**, acima do mínimo de 5 solicitado no documento d
 | Protótipo visual funcional | 30 | Identidade visual consistente, com cores, tipografia, cartões, ícones, botões, indicadores e widgets Material. |
 | Gerenciamento de estado | 20 | `StatefulWidget` e `setState()` atualizam categoria, respostas, progresso, seleção do formulário e resposta nuclear. |
 | Formulário e validação | 15 | `Form`, `GlobalKey<FormState>` e `DropdownButtonFormField`; não permite confirmar sem selecionar um item e apresenta retorno com `SnackBar`. |
-| Demonstração em vídeo | 10 | O roteiro está em `docs/ROTEIRO_VIDEO.md`. A gravação real ainda precisa ser feita pela equipe em emulador Android ou aparelho físico. |
-
-**Total dos critérios:** 100 pontos.
 
 ### Widgets e recursos utilizados
 
@@ -71,15 +68,11 @@ O aplicativo possui **7 telas**, acima do mínimo de 5 solicitado no documento d
 ## 7. Estrutura do projeto
 
 ```text
-nuclear-akinator-mobile/
+Nuclear_Akinator_Mobile/
 ├── lib/
 │   └── main.dart              # Aplicativo, dados, telas e regras do jogo
 ├── test/
 │   └── widget_test.dart       # Testes básicos da tela inicial e navegação
-├── docs/
-│   ├── EXPLICACAO_CODIGO.md   # Explicação técnica por partes
-│   ├── REQUISITOS_SPRINT.md   # Checklist detalhado da disciplina
-│   └── ROTEIRO_VIDEO.md      # Roteiro para vídeo de até 5 minutos
 ├── pubspec.yaml               # Configuração e dependências Flutter
 ├── .gitignore
 └── README.md
@@ -107,9 +100,10 @@ Não há backend, banco de dados, autenticação ou API externa nesta Sprint, co
 
 ### Executar o aplicativo
 
-Na raiz do repositório, execute:
+O repositório guarda apenas o código Dart (`lib/`, `test/` e `pubspec.yaml`). Na primeira execução, gere as pastas de plataforma do Android e depois rode o app. Na raiz do repositório, execute:
 
 ```bash
+flutter create . --platforms=android
 flutter pub get
 flutter run
 ```
@@ -145,56 +139,18 @@ flutter analyze
 - [ ] Reiniciar o jogo.
 - [ ] Executar em emulador Android ou aparelho físico.
 
-## 11. Vídeo obrigatório
+## 11. Entrega
 
-A disciplina exige vídeo narrado por um ou mais integrantes, com duração máxima de **5 minutos**, demonstrando o aplicativo em emulador Android ou dispositivo físico. O vídeo deve mostrar todas as telas, navegação, formulário, validação, gerenciamento de estado e interação do usuário. Não vale demonstração exclusivamente em navegador.
+O documento da disciplina previa a entrega pelo GitHub Classroom, mas o serviço foi desativado pelo GitHub em 28 de agosto de 2026. Por isso, o projeto está disponível neste repositório público: https://github.com/manovares/Nuclear_Akinator_Mobile
 
-Depois de gravar:
-
-1. Publique o vídeo no YouTube como **Não listado**.
-2. Copie o link e substitua o campo abaixo.
-
-**Link do vídeo:** `INSERIR_LINK_DO_YOUTUBE_NAO_LISTADO_AQUI`
-
-O roteiro sugerido está em `docs/ROTEIRO_VIDEO.md`.
-
-## 12. Entrega pelo GitHub Classroom e histórico Git
-
-O documento da disciplina determina que o projeto seja disponibilizado no repositório fornecido pelo **GitHub Classroom**. Se o professor disponibilizou um link de convite, aceitem a atividade por esse link e enviem o projeto para o repositório criado pela plataforma.
-
-O histórico deve mostrar desenvolvimento incremental. Façam commits reais conforme forem adicionando e revisando partes do trabalho. Exemplos de mensagens:
-
-```bash
-git add README.md pubspec.yaml
-git commit -m "docs: documenta o projeto e configura o Flutter"
-
-git add lib/main.dart
-git commit -m "feat: implementa estrutura e tela inicial"
-
-git add lib/main.dart
-git commit -m "feat: adiciona seleção de categoria e perguntas"
-
-git add lib/main.dart
-git commit -m "feat: implementa palpite e correção validada"
-
-git add lib/main.dart
-git commit -m "feat: adiciona descoberta nuclear e resultado educativo"
-
-git add test docs
- git commit -m "test: adiciona testes e documentação da Sprint 1"
-```
-
-> Os comandos acima são exemplos para orientar commits feitos durante o trabalho. Não criem commits retroativos ou um histórico fictício: o histórico precisa representar o desenvolvimento real da equipe.
-
-## 13. Escopo e limitações desta versão
+## 12. Escopo e limitações desta versão
 
 - O banco de itens é pequeno e fixo, apenas para demonstrar o fluxo da Sprint 1.
 - A lógica de adivinhação usa características cadastradas e regras locais; não é uma IA treinada nem um modelo generativo.
 - O aplicativo não consulta internet e não salva partidas após fechar.
 - Os textos educativos são explicações introdutórias; não substituem orientação técnica, médica ou de segurança radiológica.
-- A versão ainda precisa ser executada e testada pela equipe em ambiente Flutter/Android antes da submissão.
 
-## 14. Próximas evoluções possíveis
+## 13. Próximas evoluções possíveis
 
 - Ampliar o catálogo de alimentos e objetos com revisão científica das informações.
 - Melhorar a estratégia de perguntas para reduzir ambiguidades e palpites repetidos.
