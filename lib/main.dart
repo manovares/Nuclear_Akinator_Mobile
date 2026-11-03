@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 void main() => runApp(const NuclearAkinatorApp());
@@ -34,7 +36,7 @@ class GameItem {
 const items = <GameItem>[
   GameItem(
     name: 'Banana', category: 'Alimento', emoji: '🍌',
-    traits: {'É um alimento?': true, 'É uma fruta?': true, 'É amarelo?': true, 'É encontrado em feiras?': true},
+    traits: {'É uma fruta?': true, 'É doce?': true, 'Tem a casca amarela?': true, 'É vermelho por fora?': false, 'Cresce embaixo da terra?': false, 'Tem casca dura?': false, 'Costuma ser comido cru?': true, 'É laranja?': false, 'Precisa ser cozido para comer?': false, 'É um grão?': false},
     nuclearTitle: 'Radioatividade natural',
     nuclearText: 'Sim! A banana contém potássio. Uma pequena fração desse elemento é o isótopo potássio-40, que é radioativo.',
     learning: 'A radioatividade natural está presente no ambiente e em alimentos. A quantidade encontrada em uma banana é muito pequena e não representa risco relevante no consumo habitual.',
@@ -42,7 +44,7 @@ const items = <GameItem>[
   ),
   GameItem(
     name: 'Castanha-do-pará', category: 'Alimento', emoji: '🌰',
-    traits: {'É um alimento?': true, 'É uma fruta?': false, 'É amarelo?': false, 'É encontrado em feiras?': true},
+    traits: {'É uma fruta?': false, 'É doce?': false, 'Tem a casca amarela?': false, 'É vermelho por fora?': false, 'Cresce embaixo da terra?': false, 'Tem casca dura?': true, 'Costuma ser comido cru?': true, 'É laranja?': false, 'Precisa ser cozido para comer?': false, 'É um grão?': false},
     nuclearTitle: 'Elementos radioativos naturais',
     nuclearText: 'Sim! A castanha-do-pará pode conter radionuclídeos naturais, como o rádio, absorvidos do solo pelas raízes.',
     learning: 'É um exemplo de como elementos radioativos naturais estão presentes no ambiente. A presença natural não significa automaticamente perigo.',
@@ -50,7 +52,7 @@ const items = <GameItem>[
   ),
   GameItem(
     name: 'Maçã', category: 'Alimento', emoji: '🍎',
-    traits: {'É um alimento?': true, 'É uma fruta?': true, 'É amarelo?': false, 'É encontrado em feiras?': true},
+    traits: {'É uma fruta?': true, 'É doce?': true, 'Tem a casca amarela?': false, 'É vermelho por fora?': true, 'Cresce embaixo da terra?': false, 'Tem casca dura?': false, 'Costuma ser comido cru?': true, 'É laranja?': false, 'Precisa ser cozido para comer?': false, 'É um grão?': false},
     nuclearTitle: 'Potássio natural',
     nuclearText: 'A maçã contém potássio, como muitos alimentos. O potássio natural inclui uma pequena parcela do isótopo radioativo potássio-40.',
     learning: 'A quantidade é muito baixa. O ponto educativo é entender que existe radioatividade natural em diversos elementos do cotidiano.',
@@ -58,7 +60,7 @@ const items = <GameItem>[
   ),
   GameItem(
     name: 'Celular', category: 'Objeto', emoji: '📱',
-    traits: {'É um alimento?': false, 'É usado no dia a dia?': true, 'Funciona com bateria?': true, 'É eletrônico?': true},
+    traits: {'É eletrônico?': true, 'Funciona com bateria?': true, 'Fica na cozinha?': false, 'É usado na medicina?': false, 'É usado no pulso?': false, 'Serve para a segurança da casa?': false, 'Esquenta comida?': false, 'É feito de pedra?': false, 'Cabe no bolso?': true, 'Fica preso no teto?': false},
     nuclearTitle: 'Radiação não ionizante',
     nuclearText: 'O celular transmite e recebe ondas de radiofrequência, que são uma forma de radiação não ionizante. Ele não é radioativo por si só.',
     learning: 'Nem toda radiação é igual. Radiofrequência não é a mesma coisa que radiação ionizante emitida por raios X ou por materiais radioativos.',
@@ -66,7 +68,7 @@ const items = <GameItem>[
   ),
   GameItem(
     name: 'Aparelho de raio-X', category: 'Objeto', emoji: '🩻',
-    traits: {'É um alimento?': false, 'É usado no dia a dia?': false, 'É usado na medicina?': true, 'É eletrônico?': true},
+    traits: {'É eletrônico?': true, 'Funciona com bateria?': false, 'Fica na cozinha?': false, 'É usado na medicina?': true, 'É usado no pulso?': false, 'Serve para a segurança da casa?': false, 'Esquenta comida?': false, 'É feito de pedra?': false, 'Cabe no bolso?': false, 'Fica preso no teto?': false},
     nuclearTitle: 'Radiação ionizante na medicina',
     nuclearText: 'Sim! O aparelho produz raios X quando está em funcionamento, permitindo visualizar estruturas internas do corpo.',
     learning: 'O aparelho convencional não precisa conter material radioativo para produzir raios X: a radiação é gerada durante o funcionamento.',
@@ -74,7 +76,7 @@ const items = <GameItem>[
   ),
   GameItem(
     name: 'Detector de fumaça', category: 'Objeto', emoji: '🚨',
-    traits: {'É um alimento?': false, 'É usado no dia a dia?': true, 'Funciona com bateria?': true, 'É eletrônico?': true},
+    traits: {'É eletrônico?': true, 'Funciona com bateria?': true, 'Fica na cozinha?': false, 'É usado na medicina?': false, 'É usado no pulso?': false, 'Serve para a segurança da casa?': true, 'Esquenta comida?': false, 'É feito de pedra?': false, 'Cabe no bolso?': false, 'Fica preso no teto?': true},
     nuclearTitle: 'Depende do modelo',
     nuclearText: 'Alguns detectores de fumaça por ionização utilizam uma pequena quantidade de amerício-241, um material radioativo. Modelos fotoelétricos funcionam de outra maneira.',
     learning: 'É importante identificar o tipo de detector. Não se deve abrir ou desmontar o equipamento; siga as orientações do fabricante.',
@@ -82,7 +84,7 @@ const items = <GameItem>[
   ),
   GameItem(
     name: 'Relógio antigo luminoso', category: 'Objeto', emoji: '⌚',
-    traits: {'É um alimento?': false, 'É usado no dia a dia?': true, 'Funciona com bateria?': false, 'É eletrônico?': false},
+    traits: {'É eletrônico?': false, 'Funciona com bateria?': false, 'Fica na cozinha?': false, 'É usado na medicina?': false, 'É usado no pulso?': true, 'Serve para a segurança da casa?': false, 'Esquenta comida?': false, 'É feito de pedra?': false, 'Fica preso no teto?': false},
     nuclearTitle: 'Depende da época e do material',
     nuclearText: 'Alguns relógios antigos usavam materiais luminosos com substâncias radioativas, como o rádio. Muitos relógios atuais usam tecnologias diferentes.',
     learning: 'A idade e a composição do objeto importam. Não tente abrir ou raspar tintas luminosas antigas.',
@@ -90,10 +92,42 @@ const items = <GameItem>[
   ),
   GameItem(
     name: 'Batata', category: 'Alimento', emoji: '🥔',
-    traits: {'É um alimento?': true, 'É uma fruta?': false, 'É amarelo?': false, 'É encontrado em feiras?': true},
+    traits: {'É uma fruta?': false, 'É doce?': false, 'Tem a casca amarela?': false, 'É vermelho por fora?': false, 'Cresce embaixo da terra?': true, 'Tem casca dura?': false, 'Costuma ser comido cru?': false, 'É laranja?': false, 'Precisa ser cozido para comer?': true, 'É um grão?': false},
     nuclearTitle: 'Potássio-40 na natureza',
     nuclearText: 'A batata contém potássio, e uma pequena parcela do potássio natural é o isótopo radioativo potássio-40.',
     learning: 'A radioatividade natural ocorre em muitos alimentos. Isso não significa que eles sejam perigosos no consumo normal.',
+    relation: 'yes',
+  ),
+  GameItem(
+    name: 'Cenoura', category: 'Alimento', emoji: '🥕',
+    traits: {'É uma fruta?': false, 'Tem a casca amarela?': false, 'É vermelho por fora?': false, 'Cresce embaixo da terra?': true, 'Tem casca dura?': false, 'Costuma ser comido cru?': true, 'É laranja?': true, 'Precisa ser cozido para comer?': false, 'É um grão?': false},
+    nuclearTitle: 'Potássio-40 na natureza',
+    nuclearText: 'A cenoura, como a maioria dos vegetais, contém potássio. Uma pequena parcela do potássio natural é o isótopo radioativo potássio-40.',
+    learning: 'O nosso próprio corpo também contém potássio-40. É uma radioatividade natural, presente em níveis muito baixos.',
+    relation: 'yes',
+  ),
+  GameItem(
+    name: 'Feijão', category: 'Alimento', emoji: '🫘',
+    traits: {'É uma fruta?': false, 'É doce?': false, 'Tem a casca amarela?': false, 'É vermelho por fora?': false, 'Cresce embaixo da terra?': false, 'Costuma ser comido cru?': false, 'É laranja?': false, 'Precisa ser cozido para comer?': true, 'É um grão?': true},
+    nuclearTitle: 'Rico em potássio',
+    nuclearText: 'O feijão é um dos alimentos mais ricos em potássio e, por isso, contém um pouco de potássio-40, um isótopo radioativo natural.',
+    learning: 'Alimentos ricos em potássio têm um pouco mais de potássio-40, mas a dose recebida na alimentação é muito pequena e faz parte da radiação natural do dia a dia.',
+    relation: 'yes',
+  ),
+  GameItem(
+    name: 'Micro-ondas', category: 'Objeto', emoji: '♨️',
+    traits: {'É eletrônico?': true, 'Funciona com bateria?': false, 'Fica na cozinha?': true, 'É usado na medicina?': false, 'É usado no pulso?': false, 'Serve para a segurança da casa?': false, 'Esquenta comida?': true, 'É feito de pedra?': false, 'Cabe no bolso?': false, 'Fica preso no teto?': false},
+    nuclearTitle: 'Radiação não ionizante',
+    nuclearText: 'O micro-ondas usa ondas eletromagnéticas para agitar as moléculas de água e aquecer a comida. É uma radiação não ionizante.',
+    learning: 'A comida aquecida no micro-ondas não fica radioativa. Aquecer com ondas não é o mesmo que expor algo a um material radioativo.',
+    relation: 'no',
+  ),
+  GameItem(
+    name: 'Bancada de granito', category: 'Objeto', emoji: '🪨',
+    traits: {'É eletrônico?': false, 'Funciona com bateria?': false, 'Fica na cozinha?': true, 'É usado na medicina?': false, 'É usado no pulso?': false, 'Serve para a segurança da casa?': false, 'Esquenta comida?': false, 'É feito de pedra?': true, 'Cabe no bolso?': false, 'Fica preso no teto?': false},
+    nuclearTitle: 'Radioatividade natural das rochas',
+    nuclearText: 'Rochas como o granito podem conter pequenas quantidades de urânio, tório e potássio-40, elementos que existem naturalmente na crosta terrestre.',
+    learning: 'Na maioria das bancadas os níveis são muito baixos. Isso mostra que a radioatividade natural também está nas rochas e nos materiais de construção.',
     relation: 'yes',
   ),
 ];
@@ -121,66 +155,103 @@ class NuclearAkinatorApp extends StatelessWidget {
   }
 }
 
-class GameSession extends ChangeNotifier {
-  String category = 'Todos';
+const foodQuestions = [
+  'É uma fruta?',
+  'É doce?',
+  'Tem a casca amarela?',
+  'É vermelho por fora?',
+  'Cresce embaixo da terra?',
+  'Tem casca dura?',
+  'Costuma ser comido cru?',
+  'É laranja?',
+  'Precisa ser cozido para comer?',
+  'É um grão?',
+];
+
+const objectQuestions = [
+  'É eletrônico?',
+  'Funciona com bateria?',
+  'Fica na cozinha?',
+  'É usado na medicina?',
+  'É usado no pulso?',
+  'Serve para a segurança da casa?',
+  'Esquenta comida?',
+  'É feito de pedra?',
+  'Cabe no bolso?',
+  'Fica preso no teto?',
+];
+
+/// Controla uma partida: escolhe a próxima pergunta com base nas respostas
+/// anteriores e calcula qual item combina melhor com elas.
+class GameSession {
+  static const maxQuestions = 6;
+  static const minQuestions = 3;
+
+  final String category;
   final Map<String, bool?> answers = {};
-  int questionIndex = 0;
-  GameItem? guessedItem;
-  GameItem? confirmedItem;
-  bool guessConfirmed = false;
+  final Random _random = Random();
+  String? currentQuestion;
 
-  final List<String> questions = const [
-    'É um alimento?',
-    'É uma fruta?',
-    'É amarelo?',
-    'É usado no dia a dia?',
-    'É usado na medicina?',
-    'Funciona com bateria?',
-    'É eletrônico?',
-    'É encontrado em feiras?',
-  ];
-
-  List<GameItem> get candidates {
-    return items.where((item) {
-      if (category != 'Todos' && item.category != category) return false;
-      for (final entry in answers.entries) {
-        if (entry.value == null) continue;
-        final trait = item.traits[entry.key];
-        if (trait != null && trait != entry.value) return false;
-      }
-      return true;
-    }).toList();
+  GameSession(this.category) {
+    currentQuestion = _nextQuestion();
   }
 
-  void reset(String selectedCategory) {
-    category = selectedCategory;
-    answers.clear();
-    questionIndex = 0;
-    guessedItem = null;
-    confirmedItem = null;
-    guessConfirmed = false;
+  List<GameItem> get pool => items.where((i) => i.category == category).toList();
+  List<String> get questions => category == 'Alimento' ? foodQuestions : objectQuestions;
+  int get answeredCount => answers.length;
+  bool get finished => currentQuestion == null;
+
+  /// Pontuação do item: +1 para cada resposta que combina e -2 para cada uma
+  /// que contradiz. "Não sei" e características não cadastradas não contam.
+  /// Assim, uma resposta errada não elimina o item de vez.
+  int score(GameItem item) {
+    var total = 0;
+    answers.forEach((question, answer) {
+      final trait = item.traits[question];
+      if (answer == null || trait == null) return;
+      total += trait == answer ? 1 : -2;
+    });
+    return total;
+  }
+
+  /// Itens empatados com a maior pontuação.
+  List<GameItem> get leaders {
+    final all = pool;
+    final best = all.map(score).reduce(max);
+    return all.where((i) => score(i) == best).toList();
+  }
+
+  /// Escolhe a pergunta que melhor divide os itens que ainda estão na frente.
+  String? _nextQuestion() {
+    if (answeredCount >= maxQuestions) return null;
+    final top = leaders;
+    if (top.length == 1 && answeredCount >= minQuestions) return null;
+    final group = top.length > 1 ? top : pool;
+
+    String? bestQuestion;
+    var bestSplit = 0;
+    for (final question in questions) {
+      if (answers.containsKey(question)) continue;
+      final yes = group.where((i) => i.traits[question] == true).length;
+      final no = group.where((i) => i.traits[question] == false).length;
+      final split = min(yes, no);
+      if (split > bestSplit) {
+        bestSplit = split;
+        bestQuestion = question;
+      }
+    }
+    return bestQuestion;
   }
 
   void answer(bool? value) {
-    final q = questions[questionIndex];
-    answers[q] = value;
-    questionIndex++;
+    answers[currentQuestion!] = value;
+    currentQuestion = _nextQuestion();
   }
 
+  /// Palpite: o item com maior pontuação; em caso de empate, sorteia um deles.
   GameItem chooseGuess() {
-    final pool = candidates.isNotEmpty ? candidates : items.where((e) => category == 'Todos' || e.category == category).toList();
-    guessedItem = pool.first;
-    return guessedItem!;
-  }
-
-  void confirmGuess() {
-    confirmedItem = guessedItem;
-    guessConfirmed = true;
-  }
-
-  void correctGuess(GameItem item) {
-    confirmedItem = item;
-    guessConfirmed = false;
+    final top = leaders;
+    return top[_random.nextInt(top.length)];
   }
 }
 
@@ -306,14 +377,12 @@ class QuestionsScreen extends StatefulWidget {
 }
 
 class _QuestionsScreenState extends State<QuestionsScreen> {
-  final GameSession game = GameSession();
-  @override
-  void initState() { super.initState(); game.reset(widget.category); }
+  late final GameSession game = GameSession(widget.category);
   @override
   Widget build(BuildContext context) {
-    // Evita acessar uma pergunta inexistente enquanto a tela troca para o palpite.
-    final qIndex = game.questionIndex < game.questions.length ? game.questionIndex : game.questions.length - 1;
-    final question = game.questions[qIndex];
+    // Quando a partida termina, a tela ainda aparece por um instante durante a troca para o palpite.
+    final number = min(game.answeredCount + 1, GameSession.maxQuestions);
+    final question = game.currentQuestion ?? '';
     return Scaffold(
       appBar: AppBar(title: const Text('Vamos descobrir')),
       body: Padding(
@@ -321,10 +390,10 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             const Text('PERGUNTA', style: TextStyle(color: pink, fontWeight: FontWeight.w900, letterSpacing: 1)),
-            Text('${qIndex + 1} de ${game.questions.length}', style: const TextStyle(color: muted, fontWeight: FontWeight.w700)),
+            Text('$number de até ${GameSession.maxQuestions}', style: const TextStyle(color: muted, fontWeight: FontWeight.w700)),
           ]),
           const SizedBox(height: 12),
-          ClipRRect(borderRadius: BorderRadius.circular(20), child: LinearProgressIndicator(value: (qIndex + 1) / game.questions.length, minHeight: 8, color: pink, backgroundColor: Colors.black12)),
+          ClipRRect(borderRadius: BorderRadius.circular(20), child: LinearProgressIndicator(value: number / GameSession.maxQuestions, minHeight: 8, color: pink, backgroundColor: Colors.black12)),
           const Spacer(),
           const Center(child: Text('🤔', style: TextStyle(fontSize: 68))),
           const SizedBox(height: 26),
@@ -343,7 +412,7 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
   }
   void _answer(bool? value) {
     setState(() => game.answer(value));
-    if (game.questionIndex >= game.questions.length) {
+    if (game.finished) {
       final guess = game.chooseGuess();
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => GuessScreen(item: guess, category: widget.category)));
     }
