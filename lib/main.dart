@@ -431,3 +431,89 @@ class _CorrectionScreenState extends State<CorrectionScreen> {
   }
 }
 
+class NuclearQuestionScreen extends StatefulWidget {
+  final GameItem item;
+  const NuclearQuestionScreen({super.key, required this.item});
+  @override
+  State<NuclearQuestionScreen> createState() => _NuclearQuestionScreenState();
+}
+
+class _NuclearQuestionScreenState extends State<NuclearQuestionScreen> {
+  bool? response;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('A grande pergunta')),
+      body: Padding(padding: const EdgeInsets.all(24), child: Column(children: [
+        const Spacer(),
+        Text(widget.item.emoji, style: const TextStyle(fontSize: 76)),
+        const SizedBox(height: 24),
+        const Text('SURPRESA NUCLEAR!', style: TextStyle(color: pink, fontWeight: FontWeight.w900, letterSpacing: 1)),
+        const SizedBox(height: 12),
+        const Text('Você acha que esse item tem relação com a radiação?', textAlign: TextAlign.center, style: TextStyle(color: navy, fontSize: 26, fontWeight: FontWeight.w900, height: 1.2)),
+        const SizedBox(height: 14),
+        Text(widget.item.name, style: const TextStyle(color: muted, fontSize: 18)),
+        const Spacer(),
+        _AnswerButton(label: 'Sim', icon: Icons.check_circle, onTap: () => setState(() => response = true)),
+        const SizedBox(height: 10),
+        _AnswerButton(label: 'Não', icon: Icons.cancel, onTap: () => setState(() => response = false), secondary: true),
+        if (response != null) ...[
+          const SizedBox(height: 16),
+          SizedBox(width: double.infinity, height: 54, child: FilledButton(
+            style: FilledButton.styleFrom(backgroundColor: green, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))),
+            onPressed: () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => ResultScreen(item: widget.item, answer: response!))),
+            child: const Text('VER A DESCOBERTA', style: TextStyle(fontWeight: FontWeight.w900)),
+          )),
+        ],
+        const SizedBox(height: 12),
+      ])),
+    );
+  }
+}
+
+class ResultScreen extends StatelessWidget {
+  final GameItem item; final bool answer;
+  const ResultScreen({super.key, required this.item, required this.answer});
+  @override
+  Widget build(BuildContext context) {
+    final hasRelation = item.relation == 'yes' || item.relation == 'conditional';
+    final headline = item.relation == 'conditional' ? 'DEPENDE DO MODELO!' : (hasRelation ? 'SIM, TEM RELAÇÃO!' : 'NÃO É RADIOATIVO!');
+    final feedback = item.relation == 'conditional'
+      ? 'A resposta depende da versão e das características desse item.'
+      : (hasRelation ? 'Boa descoberta! Veja como isso acontece:' : 'Quase! Existe uma diferença importante para entender:');
+    return Scaffold(
+      appBar: AppBar(title: const Text('Sua descoberta')),
+      body: ListView(padding: const EdgeInsets.all(22), children: [
+        Center(child: Text(item.emoji, style: const TextStyle(fontSize: 74))),
+        const SizedBox(height: 10),
+        Center(child: Text(headline, textAlign: TextAlign.center, style: const TextStyle(color: pink, fontSize: 24, fontWeight: FontWeight.w900))),
+        const SizedBox(height: 12),
+        Text(feedback, textAlign: TextAlign.center, style: const TextStyle(color: muted, fontSize: 14)),
+        const SizedBox(height: 22),
+        Container(padding: const EdgeInsets.all(18), decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(18)),
+          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text(item.name, style: const TextStyle(color: navy, fontSize: 22, fontWeight: FontWeight.w900)),
+            const SizedBox(height: 8),
+            Text(item.nuclearTitle.toUpperCase(), style: const TextStyle(color: pink, fontWeight: FontWeight.w900, fontSize: 11, letterSpacing: .7)),
+            const SizedBox(height: 8),
+            Text(item.nuclearText, style: const TextStyle(color: ink, height: 1.5)),
+            const SizedBox(height: 16),
+            const Text('O QUE VOCÊ APRENDEU?', style: TextStyle(color: navy, fontWeight: FontWeight.w900, fontSize: 12)),
+            const SizedBox(height: 7),
+            Text(item.learning, style: const TextStyle(color: muted, height: 1.5)),
+          ]),
+        ),
+        const SizedBox(height: 16),
+        Container(padding: const EdgeInsets.all(14), decoration: BoxDecoration(color: const Color(0xFFE8F4EE), borderRadius: BorderRadius.circular(14)),
+          child: const Text('Lembre-se: radiação, radioatividade e risco não são a mesma coisa. O contexto e o tipo de exposição fazem diferença.', style: TextStyle(color: Color(0xFF176342), height: 1.4, fontWeight: FontWeight.w600)),
+        ),
+        const SizedBox(height: 22),
+        SizedBox(height: 52, child: FilledButton(
+          style: FilledButton.styleFrom(backgroundColor: pink, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))),
+          onPressed: () => Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => const HomeScreen()), (route) => false),
+          child: const Text('JOGAR NOVAMENTE', style: TextStyle(fontWeight: FontWeight.w900)),
+        )),
+      ]),
+    );
+  }
+}
