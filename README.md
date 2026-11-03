@@ -29,7 +29,7 @@ Desmistificar a tecnologia nuclear e mostrar que fenômenos relacionados à radi
 ## 4. Como funciona
 
 1. **Início:** apresenta a proposta e o botão para começar.
-2. **Categoria:** o usuário escolhe entre alimentos e objetos.
+2. **Categoria:** o usuário escolhe entre alimentos e objetos e vê a lista de itens disponíveis naquela categoria, para pensar em um deles.
 3. **Perguntas:** responde a oito perguntas usando Sim, Não ou Não sei. A barra de progresso acompanha a partida.
 4. **Palpite:** o aplicativo apresenta o item que melhor corresponde às respostas registradas e pergunta se acertou.
 5. **Correção do palpite:** se o palpite estiver errado, o usuário seleciona o item que realmente escolheu em um formulário validado.
@@ -43,7 +43,7 @@ Desmistificar a tecnologia nuclear e mostrar que fenômenos relacionados à radi
 | Tela | Responsabilidade |
 |---|---|
 | Início | Apresentar o jogo e iniciar a experiência. |
-| Escolha de categoria | Selecionar alimentos ou objetos. |
+| Escolha de categoria | Selecionar alimentos ou objetos e mostrar os itens disponíveis. |
 | Perguntas | Registrar respostas e atualizar o progresso. |
 | Palpite | Exibir a tentativa de adivinhação e pedir confirmação. |
 | Correção do palpite | Permitir selecionar o item correto com validação. |
@@ -63,17 +63,21 @@ O aplicativo possui **7 telas**, acima do mínimo de 5 solicitado no documento d
 
 ### Widgets e recursos utilizados
 
-`MaterialApp`, `Scaffold`, `AppBar`, `SafeArea`, `Column`, `Row`, `Container`, `Padding`, `SizedBox`, `Card`/cartões construídos com `Container`, `Icon`, `ListView`, `LinearProgressIndicator`, `FilledButton`, `OutlinedButton`, `TextButton`, `Form`, `GlobalKey<FormState>`, `DropdownButtonFormField`, `SnackBar`, `StatefulWidget`, `setState()`, `Navigator` e `MaterialPageRoute`.
+`MaterialApp`, `Scaffold`, `AppBar`, `SafeArea`, `Column`, `Row`, `Container`, `Padding`, `SizedBox`, `Wrap`, `Chip`, `Card`/cartões construídos com `Container`, `Icon`, `ListView`, `LinearProgressIndicator`, `FilledButton`, `OutlinedButton`, `TextButton`, `Form`, `GlobalKey<FormState>`, `DropdownButtonFormField`, `SnackBar`, `StatefulWidget`, `setState()`, `Navigator` e `MaterialPageRoute`.
 
 ## 7. Estrutura do projeto
 
 ```text
 Nuclear_Akinator_Mobile/
+├── android/                   # Projeto Android (gerado pelo Flutter)
+├── web/                       # Versão web (gerada pelo Flutter)
 ├── lib/
 │   └── main.dart              # Aplicativo, dados, telas e regras do jogo
 ├── test/
 │   └── widget_test.dart       # Testes básicos da tela inicial e navegação
 ├── pubspec.yaml               # Configuração e dependências Flutter
+├── pubspec.lock               # Versões travadas das dependências
+├── analysis_options.yaml      # Regras do analisador (flutter_lints)
 ├── .gitignore
 └── README.md
 ```
@@ -100,10 +104,9 @@ Não há backend, banco de dados, autenticação ou API externa nesta Sprint, co
 
 ### Executar o aplicativo
 
-O repositório guarda apenas o código Dart (`lib/`, `test/` e `pubspec.yaml`). Na primeira execução, gere as pastas de plataforma do Android e depois rode o app. Na raiz do repositório, execute:
+Na raiz do repositório, execute:
 
 ```bash
-flutter create . --platforms=android
 flutter pub get
 flutter run
 ```
