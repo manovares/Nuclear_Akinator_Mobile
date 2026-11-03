@@ -30,8 +30,8 @@ Desmistificar a tecnologia nuclear e mostrar que fenômenos relacionados à radi
 
 1. **Início:** apresenta a proposta e o botão para começar.
 2. **Categoria:** o usuário escolhe entre alimentos e objetos e vê a lista de itens disponíveis naquela categoria, para pensar em um deles.
-3. **Perguntas:** responde a oito perguntas usando Sim, Não ou Não sei. A barra de progresso acompanha a partida.
-4. **Palpite:** o aplicativo apresenta o item que melhor corresponde às respostas registradas e pergunta se acertou.
+3. **Perguntas:** responde a até seis perguntas usando Sim, Não ou Não sei. Cada pergunta é escolhida conforme as respostas anteriores, para separar os itens que ainda estão em disputa. A barra de progresso acompanha a partida.
+4. **Palpite:** cada item ganha pontos quando combina com uma resposta e perde quando a contradiz. O aplicativo apresenta o item com a maior pontuação (sorteando entre empatados) e pergunta se acertou.
 5. **Correção do palpite:** se o palpite estiver errado, o usuário seleciona o item que realmente escolheu em um formulário validado.
 6. **Pergunta nuclear:** o usuário responde se acredita que o item tem relação com radiação.
 7. **Resultado:** o aplicativo revela a explicação científica e o principal aprendizado sobre o item.
@@ -60,6 +60,7 @@ O aplicativo possui **7 telas**, acima do mínimo de 5 solicitado no documento d
 | Protótipo visual funcional | 30 | Identidade visual consistente, com cores, tipografia, cartões, ícones, botões, indicadores e widgets Material. |
 | Gerenciamento de estado | 20 | `StatefulWidget` e `setState()` atualizam categoria, respostas, progresso, seleção do formulário e resposta nuclear. |
 | Formulário e validação | 15 | `Form`, `GlobalKey<FormState>` e `DropdownButtonFormField`; não permite confirmar sem selecionar um item e apresenta retorno com `SnackBar`. |
+| Demonstração em vídeo | 10 | Vídeo narrado demonstrando o aplicativo: https://youtu.be/Kcc1eqJrk3I |
 
 ### Widgets e recursos utilizados
 
@@ -142,21 +143,24 @@ flutter analyze
 - [ ] Reiniciar o jogo.
 - [ ] Executar em emulador Android ou aparelho físico.
 
-## 11. Entrega
+## 11. Vídeo de demonstração
+
+**Link do vídeo:** https://youtu.be/Kcc1eqJrk3I
+
+## 12. Entrega
 
 O documento da disciplina previa a entrega pelo GitHub Classroom, mas o serviço foi desativado pelo GitHub em 28 de agosto de 2026. Por isso, o projeto está disponível neste repositório público: https://github.com/manovares/Nuclear_Akinator_Mobile
 
-## 12. Escopo e limitações desta versão
+## 13. Escopo e limitações desta versão
 
-- O banco de itens é pequeno e fixo, apenas para demonstrar o fluxo da Sprint 1.
+- O banco tem 12 itens fixos (6 alimentos e 6 objetos), apenas para demonstrar o fluxo da Sprint 1.
 - A lógica de adivinhação usa características cadastradas e regras locais; não é uma IA treinada nem um modelo generativo.
 - O aplicativo não consulta internet e não salva partidas após fechar.
 - Os textos educativos são explicações introdutórias; não substituem orientação técnica, médica ou de segurança radiológica.
 
-## 13. Próximas evoluções possíveis
+## 14. Próximas evoluções possíveis
 
 - Ampliar o catálogo de alimentos e objetos com revisão científica das informações.
-- Melhorar a estratégia de perguntas para reduzir ambiguidades e palpites repetidos.
 - Adicionar imagens e animações do personagem.
 - Criar níveis, pontuação e conquistas educativas.
 - Em uma Sprint futura, avaliar persistência de progresso e painel de conteúdo.
