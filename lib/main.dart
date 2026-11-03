@@ -184,3 +184,107 @@ class GameSession extends ChangeNotifier {
   }
 }
 
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(24, 22, 24, 24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(children: [
+                const Icon(Icons.auto_awesome, color: pink, size: 27),
+                const SizedBox(width: 8),
+                const Text('NUCLEAR', style: TextStyle(color: navy, fontWeight: FontWeight.w900, letterSpacing: 2)),
+                const Text(' AKINATOR', style: TextStyle(color: pink, fontWeight: FontWeight.w900, letterSpacing: 1)),
+              ]),
+              const Spacer(),
+              Center(
+                child: Container(
+                  width: 190, height: 190,
+                  decoration: BoxDecoration(color: navy, borderRadius: BorderRadius.circular(48)),
+                  child: const Center(child: Text('🧑‍🚀', style: TextStyle(fontSize: 112))),
+                ),
+              ),
+              const SizedBox(height: 30),
+              const Text('Pense em um objeto.\nDescubra algo\nsurpreendente.', style: TextStyle(fontSize: 31, height: 1.12, fontWeight: FontWeight.w900, color: navy)),
+              const SizedBox(height: 14),
+              const Text('Um jogo de adivinhação que revela como a radiação e a tecnologia nuclear aparecem no nosso cotidiano.', style: TextStyle(fontSize: 15, height: 1.5, color: muted)),
+              const Spacer(),
+              SizedBox(width: double.infinity, height: 56, child: FilledButton(
+                style: FilledButton.styleFrom(backgroundColor: pink, foregroundColor: Colors.white, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16))),
+                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const CategoryScreen())),
+                child: const Text('COMEÇAR JOGO', style: TextStyle(fontWeight: FontWeight.w900, letterSpacing: 1)),
+              )),
+              const SizedBox(height: 12),
+              const Center(child: Text('Aprender pode ser uma descoberta.', style: TextStyle(color: muted, fontSize: 12))),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class CategoryScreen extends StatefulWidget {
+  const CategoryScreen({super.key});
+  @override
+  State<CategoryScreen> createState() => _CategoryScreenState();
+}
+
+class _CategoryScreenState extends State<CategoryScreen> {
+  String selected = 'Alimento';
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Escolha seu desafio')),
+      body: Padding(
+        padding: const EdgeInsets.all(22),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          const Text('O que você escolheu?', style: TextStyle(fontSize: 27, fontWeight: FontWeight.w900, color: navy)),
+          const SizedBox(height: 8),
+          const Text('Pense em um item da categoria selecionada. Não conte para o nosso personagem!', style: TextStyle(color: muted, height: 1.4)),
+          const SizedBox(height: 26),
+          _CategoryCard(title: 'Alimentos', subtitle: 'Frutas, castanhas e outros alimentos', emoji: '🍌', selected: selected == 'Alimento', onTap: () => setState(() => selected = 'Alimento')),
+          const SizedBox(height: 14),
+          _CategoryCard(title: 'Objetos', subtitle: 'Itens e tecnologias do cotidiano', emoji: '📱', selected: selected == 'Objeto', onTap: () => setState(() => selected = 'Objeto')),
+          const Spacer(),
+          SizedBox(width: double.infinity, height: 54, child: FilledButton(
+            style: FilledButton.styleFrom(backgroundColor: pink, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))),
+            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => QuestionsScreen(category: selected))),
+            child: const Text('PENSAR NO MEU ITEM', style: TextStyle(fontWeight: FontWeight.w900)),
+          )),
+        ]),
+      ),
+    );
+  }
+}
+
+class _CategoryCard extends StatelessWidget {
+  final String title, subtitle, emoji;
+  final bool selected;
+  final VoidCallback onTap;
+  const _CategoryCard({required this.title, required this.subtitle, required this.emoji, required this.selected, required this.onTap});
+  @override
+  Widget build(BuildContext context) => InkWell(
+    borderRadius: BorderRadius.circular(20), onTap: onTap,
+    child: Container(
+      padding: const EdgeInsets.all(18),
+      decoration: BoxDecoration(color: selected ? navy : Colors.white, borderRadius: BorderRadius.circular(20), border: Border.all(color: selected ? pink : Colors.black12, width: selected ? 2 : 1)),
+      child: Row(children: [
+        Text(emoji, style: const TextStyle(fontSize: 42)),
+        const SizedBox(width: 16),
+        Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text(title, style: TextStyle(color: selected ? Colors.white : navy, fontSize: 18, fontWeight: FontWeight.w800)),
+          Text(subtitle, style: TextStyle(color: selected ? Colors.white70 : muted, fontSize: 12)),
+        ])),
+        Icon(selected ? Icons.check_circle : Icons.circle_outlined, color: selected ? pink : muted),
+      ]),
+    ),
+  );
+}
+
