@@ -384,3 +384,50 @@ class GuessScreen extends StatelessWidget {
   }
 }
 
+class CorrectionScreen extends StatefulWidget {
+  final GameItem initialItem;
+  const CorrectionScreen({super.key, required this.initialItem});
+  @override
+  State<CorrectionScreen> createState() => _CorrectionScreenState();
+}
+
+class _CorrectionScreenState extends State<CorrectionScreen> {
+  final _formKey = GlobalKey<FormState>();
+  String? selected;
+  @override
+  Widget build(BuildContext context) {
+    final categoryItems = items.where((i) => i.category == widget.initialItem.category).toList();
+    return Scaffold(
+      appBar: AppBar(title: const Text('Corrigir meu palpite')),
+      body: Padding(padding: const EdgeInsets.all(22), child: Form(
+        key: _formKey,
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          const Text('Sem problemas! Vamos ajustar.', style: TextStyle(fontSize: 25, fontWeight: FontWeight.w900, color: navy)),
+          const SizedBox(height: 8),
+          const Text('Selecione o item que você realmente escolheu. Assim, a explicação será sobre o objeto certo.', style: TextStyle(color: muted, height: 1.4)),
+          const SizedBox(height: 25),
+          DropdownButtonFormField<String>(
+            value: selected,
+            decoration: InputDecoration(labelText: 'Qual era o item?', filled: true, fillColor: Colors.white, border: OutlineInputBorder(borderRadius: BorderRadius.circular(14), borderSide: BorderSide.none)),
+            items: categoryItems.map((i) => DropdownMenuItem(value: i.name, child: Text('${i.emoji}  ${i.name}'))).toList(),
+            onChanged: (v) => setState(() => selected = v),
+            validator: (v) => v == null ? 'Selecione o item para continuar.' : null,
+          ),
+          const Spacer(),
+          SizedBox(width: double.infinity, height: 54, child: FilledButton(
+            style: FilledButton.styleFrom(backgroundColor: pink, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))),
+            onPressed: _submit,
+            child: const Text('CONFIRMAR ITEM', style: TextStyle(fontWeight: FontWeight.w900)),
+          )),
+        ]),
+      )),
+    );
+  }
+  void _submit() {
+    if (!_formKey.currentState!.validate()) return;
+    final chosen = items.firstWhere((i) => i.name == selected);
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Item corrigido! Vamos à descoberta nuclear.')));
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => NuclearQuestionScreen(item: chosen)));
+  }
+}
+
