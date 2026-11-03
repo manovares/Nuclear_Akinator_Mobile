@@ -252,6 +252,16 @@ class _CategoryScreenState extends State<CategoryScreen> {
           _CategoryCard(title: 'Alimentos', subtitle: 'Frutas, castanhas e outros alimentos', emoji: '🍌', selected: selected == 'Alimento', onTap: () => setState(() => selected = 'Alimento')),
           const SizedBox(height: 14),
           _CategoryCard(title: 'Objetos', subtitle: 'Itens e tecnologias do cotidiano', emoji: '📱', selected: selected == 'Objeto', onTap: () => setState(() => selected = 'Objeto')),
+          const SizedBox(height: 22),
+          const Text('ESCOLHA UM DESTES', style: TextStyle(color: pink, fontWeight: FontWeight.w900, fontSize: 12, letterSpacing: 1)),
+          const SizedBox(height: 10),
+          // Mostra os itens da categoria para o jogador escolher um mentalmente.
+          Wrap(spacing: 8, runSpacing: 8, children: items.where((i) => i.category == selected).map((i) => Chip(
+            avatar: Text(i.emoji),
+            label: Text(i.name, style: const TextStyle(color: navy, fontWeight: FontWeight.w700)),
+            backgroundColor: Colors.white,
+            side: const BorderSide(color: Colors.black12),
+          )).toList()),
           const Spacer(),
           SizedBox(width: double.infinity, height: 54, child: FilledButton(
             style: FilledButton.styleFrom(backgroundColor: pink, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))),
