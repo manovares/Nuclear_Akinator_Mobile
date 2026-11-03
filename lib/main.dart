@@ -288,3 +288,99 @@ class _CategoryCard extends StatelessWidget {
   );
 }
 
+class QuestionsScreen extends StatefulWidget {
+  final String category;
+  const QuestionsScreen({super.key, required this.category});
+  @override
+  State<QuestionsScreen> createState() => _QuestionsScreenState();
+}
+
+class _QuestionsScreenState extends State<QuestionsScreen> {
+  final GameSession game = GameSession();
+  @override
+  void initState() { super.initState(); game.reset(widget.category); }
+  @override
+  Widget build(BuildContext context) {
+    final qIndex = game.questionIndex;
+    final question = game.questions[qIndex];
+    return Scaffold(
+      appBar: AppBar(title: const Text('Vamos descobrir')),
+      body: Padding(
+        padding: const EdgeInsets.all(22),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            const Text('PERGUNTA', style: TextStyle(color: pink, fontWeight: FontWeight.w900, letterSpacing: 1)),
+            Text('${qIndex + 1} de ${game.questions.length}', style: const TextStyle(color: muted, fontWeight: FontWeight.w700)),
+          ]),
+          const SizedBox(height: 12),
+          ClipRRect(borderRadius: BorderRadius.circular(20), child: LinearProgressIndicator(value: (qIndex + 1) / game.questions.length, minHeight: 8, color: pink, backgroundColor: Colors.black12)),
+          const Spacer(),
+          const Center(child: Text('🤔', style: TextStyle(fontSize: 68))),
+          const SizedBox(height: 26),
+          Text(question, textAlign: TextAlign.center, style: const TextStyle(fontSize: 28, height: 1.2, fontWeight: FontWeight.w900, color: navy)),
+          const SizedBox(height: 10),
+          const Center(child: Text('Responda de acordo com o item que você pensou.', textAlign: TextAlign.center, style: TextStyle(color: muted))),
+          const Spacer(),
+          _AnswerButton(label: 'Sim', icon: Icons.check_circle, onTap: () => _answer(true)),
+          const SizedBox(height: 10),
+          _AnswerButton(label: 'Não', icon: Icons.cancel, onTap: () => _answer(false), secondary: true),
+          const SizedBox(height: 10),
+          TextButton.icon(onPressed: () => _answer(null), icon: const Icon(Icons.help_outline), label: const Text('Não sei')),
+        ]),
+      ),
+    );
+  }
+  void _answer(bool? value) {
+    setState(() => game.answer(value));
+    if (game.questionIndex >= game.questions.length) {
+      final guess = game.chooseGuess();
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => GuessScreen(item: guess, category: widget.category)));
+    }
+  }
+}
+
+class _AnswerButton extends StatelessWidget {
+  final String label; final IconData icon; final VoidCallback onTap; final bool secondary;
+  const _AnswerButton({required this.label, required this.icon, required this.onTap, this.secondary = false});
+  @override
+  Widget build(BuildContext context) => SizedBox(width: double.infinity, height: 52, child: FilledButton.icon(
+    onPressed: onTap, icon: Icon(icon), label: Text(label, style: const TextStyle(fontWeight: FontWeight.w800)),
+    style: FilledButton.styleFrom(backgroundColor: secondary ? navy : pink, foregroundColor: Colors.white, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14))),
+  ));
+}
+
+class GuessScreen extends StatelessWidget {
+  final GameItem item; final String category;
+  const GuessScreen({super.key, required this.item, required this.category});
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Meu palpite')),
+      body: Padding(padding: const EdgeInsets.all(24), child: Column(children: [
+        const Spacer(),
+        const Text('HMMM... TENHO UMA SUSPEITA!', style: TextStyle(color: pink, fontWeight: FontWeight.w900, letterSpacing: 1, fontSize: 12)),
+        const SizedBox(height: 24),
+        Text(item.emoji, style: const TextStyle(fontSize: 100)),
+        const SizedBox(height: 18),
+        const Text('Você pensou em...', style: TextStyle(color: muted, fontSize: 16)),
+        Text(item.name, style: const TextStyle(color: navy, fontWeight: FontWeight.w900, fontSize: 34)),
+        const SizedBox(height: 12),
+        const Text('Acertei?', style: TextStyle(color: ink, fontSize: 19, fontWeight: FontWeight.w700)),
+        const Spacer(),
+        SizedBox(width: double.infinity, height: 54, child: FilledButton(
+          style: FilledButton.styleFrom(backgroundColor: pink, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))),
+          onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => NuclearQuestionScreen(item: item))),
+          child: const Text('SIM, VOCÊ ACERTOU!', style: TextStyle(fontWeight: FontWeight.w900)),
+        )),
+        const SizedBox(height: 10),
+        SizedBox(width: double.infinity, height: 54, child: OutlinedButton(
+          style: OutlinedButton.styleFrom(foregroundColor: navy, side: const BorderSide(color: navy), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))),
+          onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => CorrectionScreen(initialItem: item))),
+          child: const Text('NÃO, QUERO CORRIGIR', style: TextStyle(fontWeight: FontWeight.w900)),
+        )),
+        const SizedBox(height: 14),
+      ])),
+    );
+  }
+}
+
