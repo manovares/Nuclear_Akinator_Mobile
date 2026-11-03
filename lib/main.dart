@@ -301,7 +301,8 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
   void initState() { super.initState(); game.reset(widget.category); }
   @override
   Widget build(BuildContext context) {
-    final qIndex = game.questionIndex;
+    // Evita acessar uma pergunta inexistente enquanto a tela troca para o palpite.
+    final qIndex = game.questionIndex < game.questions.length ? game.questionIndex : game.questions.length - 1;
     final question = game.questions[qIndex];
     return Scaffold(
       appBar: AppBar(title: const Text('Vamos descobrir')),
